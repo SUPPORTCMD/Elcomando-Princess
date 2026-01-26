@@ -201,6 +201,16 @@
     </div>
 </div>
 
+      <div id="admin-broadcast" style="display:none; background: linear-gradient(90deg, #ff1a1a, #8b0000); color: white; padding: 10px; text-align: center; font-size: 13px; font-weight: bold; position: fixed; top: 65px; width: 100%; z-index: 999; box-shadow: 0 5px 15px rgba(255, 26, 26, 0.4); animation: slideDown 0.5s ease;">
+    <i class="fas fa-bullhorn" style="margin-left: 10px;"></i>
+    <span id="broadcast-text">رسالة إدارية هامة...</span>
+</div>
+
+<style>
+@keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+</style>
+
+
     <script>
         const firebaseConfig = { databaseURL: "https://elcomando-68116-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
@@ -322,6 +332,56 @@ function startNotificationWatcher() {
             document.getElementById('main-panel').style.display = 'block';
             document.getElementById('set-username').innerText = localStorage.getItem('logged_user');
         }
+        
+        function listenToAdminMessages() {
+    const userId = localStorage.getItem('logged_user');
+
+    // 1. الاستماع للرسائل العامة (لكل المشتركين)
+    db.ref('global_notifications').on('value', snap => {
+        if (snap.exists()) {
+            const data = snap.val();
+            const bar = document.getElementById('admin-broadcast');
+            const text = document.getElementById('broadcast-text');
+            
+            text.innerText = data.text;
+            bar.style.display = 'block';
+            
+            // تختفي الرسالة تلقائياً بعد دقيقة (اختياري)
+            setTimeout(() => { bar.style.display = 'none'; }, 60000);
+        }
+    });
+
+    // 2. الاستماع للرسائل الخاصة (لهذا المشترك فقط)
+    db.ref('users/' + userId + '/private_msg').on('value', snap => {
+        if (snap.exists() && snap.val() !== "") {
+            // إظهار ديلوج احترافي للرسالة الخاصة
+            showAlert("رسالة خاصة من الإدارة 📩", snap.val(), "🔔");
+            // مسح الرسالة بعد رؤيتها لعدم التكرار
+            db.ref('users/' + userId + '/private_msg').set(""); 
+        }
+    });
+}
+
+// استدعاء الدالة عند دخول النظام
+// ضفها داخل دالة enterSystem()
+
+       async function openToolPage(toolName) {
+    const user = localStorage.getItem('logged_user');
+    
+    // فحص هل الأداة مسموحة لهذا المستخدم؟
+    const permission = await db.ref('permissions/' + user + '/' + toolName).once('value');
+    
+    // إذا كنت تريد نظام اشتراكات (مثلاً الأدمن هو من يفعل الأدوات)
+    if (permission.val() === false) {
+        return showAlert("وصول محدود", "هذه الأداة غير مفعلة في اشتراكك الحالي. تواصل مع الإدارة.", "🚫");
+    }
+
+    // الكود الأصلي لفتح الأداة...
+    nav('tool', toolName, '⚙️', null);
+    // ... الباقي
+}
+
+
 
         function showAlert(title, msg) {
             document.getElementById('alert-title').innerText = title;
