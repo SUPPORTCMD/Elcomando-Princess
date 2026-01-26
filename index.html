@@ -188,7 +188,7 @@
                 
                 loader.style.display = 'flex';
                 await db.ref('users/' + u).set({ password: p, username: u });
-                localStorage.setItem('device_locked', 'true');
+                localStorage.setItem('device_locked', 'false');
                 loader.style.display = 'none';
                 
                 document.getElementById('res-u').innerText = u;
