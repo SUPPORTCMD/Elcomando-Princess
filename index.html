@@ -179,48 +179,17 @@
 
         // 1. نظام الدخول والباسورد وقفل الجهاز
         async function handleAuth(type) {
-    const loader = document.getElementById('page-loader');
-    
-    if(type === 'signup') {
-        // تم تعطيل القفل حالياً للتجربة يا دكتور
-        // if(localStorage.getItem('device_locked')) return alert("جهازك مسجل بالفعل");
-
-        const u = document.getElementById('regUser').value.trim();
-        const p = document.getElementById('regPass').value.trim();
-        
-        if(!u || !p) { alert("أكمل البيانات"); return; }
-
-        loader.style.display = 'flex';
-        
-        // حفظ في الفايربيس
-        await db.ref('users/' + u).set({ password: p, username: u });
-
-        // سطر القفل معطل مؤقتاً بطلبك
-        // localStorage.setItem('device_locked', 'true');
-        
-        loader.style.display = 'none';
-        
-        // إظهار الديلوج اللي فيه بياناتك قابلة للنسخ
-        showAccountDialog(u, p);
-
-    } else {
-        // كود تسجيل الدخول
-        const u = document.getElementById('loginUser').value.trim();
-        const p = document.getElementById('loginPass').value.trim();
-        
-        loader.style.display = 'flex';
-        const snap = await db.ref('users/' + u).once('value');
-        
-        if(snap.exists() && snap.val().password === p) {
-            localStorage.setItem('logged_user', u);
-            enterSystem();
-        } else {
-            alert("اليوزر أو الباسورد غلط ❌");
-        }
-        loader.style.display = 'none';
-    }
-}
-
+            const loader = document.getElementById('page-loader');
+            if(type === 'signup') {
+                if(localStorage.getItem('device_locked')) return showAlert("تنبيه", "يسمح بحساب واحد فقط لكل هاتف 🚫");
+                const u = document.getElementById('regUser').value.trim();
+                const p = document.getElementById('regPass').value.trim();
+                if(!u || !p) return showAlert("نقص بيانات", "اكمل اليوزر والباسورد");
+                
+                loader.style.display = 'flex';
+                await db.ref('users/' + u).set({ password: p, username: u });
+                localStorage.setItem('device_locked', 'true');
+                loader.style.display = 'none';
                 
                 document.getElementById('res-u').innerText = u;
                 document.getElementById('res-p').innerText = p;
